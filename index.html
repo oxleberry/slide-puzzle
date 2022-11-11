@@ -4,6 +4,9 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Oxleberry - Slide Puzzle</title>
+	<!-- p5.js library -->
+	<script src="https://cdn.jsdelivr.net/npm/p5@1.4.2/lib/p5.js"></script>
+	<!-- slide puzzle style & scripts -->
 	<link type="text/css" rel="stylesheet" href="./dist/slide-puzzle.css">
 	<!-- <script src="./dist/slide-puzzle.js" defer></script> -->
 	<script src="./dist/vanilla-slide-puzzle.js" defer></script>
@@ -12,5 +15,11 @@
 	<header>
 		<h1>Slide Puzzle</h1>
 	</header>
+	<main class="slide-puzzle-container">
+		<div class="reference-wrapper">
+			<img class="reference-image" src="../images/native-princess.jpg">
+		</div>
+		<div id="canvas-puzzle" class="puzzle"></div>
+	</main>
 </body>
 </html>

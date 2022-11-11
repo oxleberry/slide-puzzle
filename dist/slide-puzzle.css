@@ -1,10 +1,31 @@
+/* ===================== */
+/* General */
+/* ===================== */
 body {
   background-color: #222;
+  margin: 20px auto;
 }
 
 h1 {
   font-family: "Helvetica", sans-serif;
   color: #fff;
+  text-align: center;
+  margin: 50px;
+}
+
+/* ===================== */
+/* Slide Puzzle */
+/* ===================== */
+.slide-puzzle-container {
+  display: grid;
+  gap: 30px;
+  grid-template-columns: 1fr 1fr;
+}
+.slide-puzzle-container .reference-wrapper {
+  justify-self: flex-end;
+}
+.slide-puzzle-container .reference-image {
+  width: 100%;
 }
 
 /*# sourceMappingURL=slide-puzzle.css.map */
