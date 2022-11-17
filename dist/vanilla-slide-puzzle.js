@@ -6,6 +6,7 @@ let imgSource;
 let imgWidth = 400;
 let imgHeight = 400;
 
+// Tile & Board configuration
 let tiles = [];
 let cols = 4;
 let rows = 4;
@@ -21,6 +22,17 @@ class Tile {
 		this.idx = i;
 		this.img = img;
 	}
+}
+
+
+// ============================
+// Helper Functions
+// ============================
+// swap two elements from the board array
+function swap(idx1, idx2) {
+	let temp = board[idx1];
+	board[idx1] = board[idx2];
+	board[idx2] = temp;
 }
 
 
@@ -53,7 +65,11 @@ function setup () {
 			board.push(idx);
 		}
 	}
-	console.log('board', board);
+	// shuffle board test
+	console.log('orig board', board);
+	// board = [0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15];
+	swap(0, 1);
+	console.log('updated board', board);
 }
 
 function draw() {
