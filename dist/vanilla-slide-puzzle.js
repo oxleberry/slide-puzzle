@@ -12,6 +12,7 @@ let cols = 4;
 let rows = 4;
 let tileWidth, tileHeight;
 let board = []; // for tracking the tiles
+const blankTile = -1;
 
 
 // ============================
@@ -67,8 +68,11 @@ function setup () {
 	}
 	// shuffle board test
 	console.log('orig board', board);
-	// board = [0, 2, 4, 6, 8, 10, 12, 14, 1, 3, 5, 7, 9, 11, 13, 15];
 	swap(0, 1);
+	// create a blank tile
+	tiles.pop();
+	board.pop();
+	board.push(blankTile);
 	console.log('updated board', board);
 }
 
@@ -81,8 +85,10 @@ function draw() {
 			let y = i * tileHeight;
 			let idx = (i * cols) + j;
 			let tileIndex = board[idx];
-			let img = tiles[tileIndex].img;
-			image(img, x, y);
+			if (tileIndex !== blankTile ) {
+				let img = tiles[tileIndex].img;
+				image(img, x, y);
+			}
 			// draw thin lines between tile pieces
 			stroke(34);
 			strokeWeight(2);
