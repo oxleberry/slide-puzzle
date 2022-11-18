@@ -36,6 +36,22 @@ function swap(idx1, idx2) {
 	board[idx2] = temp;
 }
 
+// finds the blank tile in board tracking arr
+function findBlankTileIdx( ) {
+	let blankTileIdx = board.findIndex(tile => tile === blankTile);
+	return blankTileIdx;
+}
+
+// converts (tile row & col position) to (tile index in board arr)
+function findTileIdx(tileRowPos, cols, tileColPos) {
+	return (tileRowPos * cols) + tileColPos;
+}
+
+function move(tileIdx) {
+	let blankIdx = findBlankTileIdx();
+	swap(blankIdx, tileIdx);
+}
+
 
 // ============================
 // P5.js Functions
@@ -66,14 +82,10 @@ function setup () {
 			board.push(idx);
 		}
 	}
-	// shuffle board test
-	console.log('orig board', board);
-	swap(0, 1);
 	// create a blank tile
 	tiles.pop();
 	board.pop();
 	board.push(blankTile);
-	console.log('updated board', board);
 }
 
 function draw() {
@@ -96,5 +108,16 @@ function draw() {
 			rect(x, y, tileWidth, tileHeight);
 		}
 	}
-	noLoop();
+}
+
+
+// ============================
+// Event Listener
+// ============================
+// move tile based on click
+function mousePressed() {
+	const tileRowPos = floor(mouseY / tileHeight);
+	const tileColPos = floor(mouseX / tileWidth);
+	const tileIdx = findTileIdx(tileRowPos, cols, tileColPos);
+	move(tileIdx);
 }
