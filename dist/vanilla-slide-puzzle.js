@@ -47,9 +47,42 @@ function findTileIdx(tileRowPos, cols, tileColPos) {
 	return (tileRowPos * cols) + tileColPos;
 }
 
+// converts (tile index in board arr) to (tile row & col position)
+function findTilePosition(idx) {
+	const tileRowPosition = Math.floor(idx / cols);
+	const tileColPosition = idx % cols;
+	return {
+		row: tileRowPosition,
+		col: tileColPosition
+	};
+}
+
+// check if it is a valid piece to move
+function checkNeighbor(tileIdx, blankIdx) {
+	const tilePos = findTilePosition(tileIdx);
+	const tileRowPos = tilePos.row;
+	const tileColPos = tilePos.col;
+	const blankPos = findTilePosition(blankIdx);
+	const blankRowPos = blankPos.row;
+	const blankColPos = blankPos.col;
+	// checks if selected tile is not the same row or column as blank tile
+	if (tileRowPos !== blankRowPos && tileColPos!== blankColPos) {
+		return false;
+	}
+	// checks if selected tile is in a 1 row/col away (in either direction) from blank tile
+	if (Math.abs(tileRowPos - blankRowPos) == 1 || Math.abs(tileColPos - blankColPos) == 1) {
+		return true;
+	}
+	// if it's the same spot
+	return false;
+}
+
 function move(tileIdx) {
 	let blankIdx = findBlankTileIdx();
-	swap(blankIdx, tileIdx);
+	const isNeighbor = checkNeighbor(tileIdx, blankIdx);
+	if (isNeighbor) {
+		swap(tileIdx, blankIdx);
+	}
 }
 
 
