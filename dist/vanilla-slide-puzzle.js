@@ -13,6 +13,8 @@ let rows = 4;
 let tileWidth, tileHeight;
 let board = []; // for tracking the tiles
 const blankTile = -1;
+const easyShuffle = 10;
+const hardShuffle = 1000;
 
 
 // ============================
@@ -27,7 +29,7 @@ class Tile {
 
 
 // ============================
-// Helper Functions
+// Game Play Functions
 // ============================
 // swap two elements from the board array
 function swap(idx1, idx2) {
@@ -57,6 +59,14 @@ function findTilePosition(idx) {
 	};
 }
 
+function move(tileIdx) {
+	let blankIdx = findBlankTileIdx();
+	const isNeighbor = checkNeighbor(tileIdx, blankIdx);
+	if (isNeighbor) {
+		swap(tileIdx, blankIdx);
+	}
+}
+
 // check if it is a valid piece to move
 function checkNeighbor(tileIdx, blankIdx) {
 	const tilePos = findTilePosition(tileIdx);
@@ -77,12 +87,56 @@ function checkNeighbor(tileIdx, blankIdx) {
 	return false;
 }
 
-function move(tileIdx) {
-	let blankIdx = findBlankTileIdx();
-	const isNeighbor = checkNeighbor(tileIdx, blankIdx);
-	if (isNeighbor) {
-		swap(tileIdx, blankIdx);
+
+// ============================
+// Shuffle Functions
+// ============================
+function shuffleTiles(numOfTimes) {
+	for (let i = 0; i < numOfTimes; i++) {
+		randomMove();
 	}
+}
+
+// randomly move tile pieces used for shuffling board
+function randomMove() {
+	const randomizer = floor(random(10));
+	const blankIdx = findBlankTileIdx();
+	const blankPos = findTilePosition(blankIdx);
+	const blankRowPos = blankPos.row;
+	const blankColPos = blankPos.col;
+	const lastRow = rows - 1;
+	const lastCol = cols - 1;
+	let tileRowPos = blankRowPos;
+	let tileColPos = blankColPos;
+	// randomly move horizontally
+	if (randomizer % 2 === 0) {
+		tileRowPos = pickRandomTile(randomizer, blankRowPos, lastRow);
+	// randomly move vertically
+	} else {
+		tileColPos = pickRandomTile(randomizer, blankColPos, lastCol);
+	}
+	const randomTileIdx = findTileIdx(tileRowPos, cols, tileColPos);
+	swap(blankIdx, randomTileIdx);
+}
+
+// randomly generates a valid tile to move based on blank tile's position
+function pickRandomTile(randomVal, blankPos, lastEdgePos) {
+	let tilePos;
+	// if at ending edge, move up or left
+	if (blankPos === lastEdgePos) {
+		tilePos = blankPos - 1;
+		// if at beginning edge, move down or right
+	} else if (blankPos === 0) {
+		tilePos = blankPos + 1;
+	// inner pieces, move randomly
+	} else {
+		if (randomVal <= 4) {
+			tilePos = blankPos + 1;
+		} else {
+			tilePos = blankPos - 1;
+		}
+	}
+	return tilePos;
 }
 
 
@@ -97,7 +151,7 @@ function setup () {
 	// canvas setup
 	let canvas = createCanvas (imgWidth, imgHeight);
 	canvas.parent('canvas-puzzle');
-	frameRate(8); // 8 = slow, 24 = average (i think)
+	frameRate(2); // 8 = slow, 24 = average (i think)
 	// chop up source image into tiles
 	tileWidth = width / cols;
 	tileHeight = height / rows;
@@ -119,6 +173,8 @@ function setup () {
 	tiles.pop();
 	board.pop();
 	board.push(blankTile);
+	// shuffles board pieces
+	shuffleTiles(easyShuffle);
 }
 
 function draw() {
@@ -141,6 +197,7 @@ function draw() {
 			rect(x, y, tileWidth, tileHeight);
 		}
 	}
+	// shuffleTiles(1);
 }
 
 
