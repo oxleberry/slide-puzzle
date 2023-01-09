@@ -64,6 +64,7 @@ function move(tileIdx) {
 	const isNeighbor = checkNeighbor(tileIdx, blankIdx);
 	if (isNeighbor) {
 		swap(tileIdx, blankIdx);
+		checkSolved();
 	}
 }
 
@@ -141,6 +142,20 @@ function pickRandomTile(randomVal, blankPos, lastEdgePos) {
 
 
 // ============================
+// Win Game Functions
+// ============================
+function checkSolved() {
+	for (let i = 0; i < board.length - 1; i++) {
+		if (board[i] !== tiles[i].idx) {
+			return false;
+		}
+	}
+	console.log("SOLVED");
+	noLoop();
+}
+
+
+// ============================
 // P5.js Functions
 // ============================
 function preload() {
@@ -197,7 +212,6 @@ function draw() {
 			rect(x, y, tileWidth, tileHeight);
 		}
 	}
-	// shuffleTiles(1);
 }
 
 
