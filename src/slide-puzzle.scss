@@ -69,7 +69,8 @@ header {
 	.reference-image {
 		width: 100%;
 		height: 410px;
-		background: url('../images/narwhal-static.jpg');
+		background: url('../images/narwhal-animated.gif');
+		// background: url('../images/narwhal-static.jpg');
 		background-position: 50%;
 		background-size: contain;
 		background-repeat: no-repeat;
@@ -79,7 +80,71 @@ header {
 
 	.puzzle-wrapper {
 		display: grid;
-		gap: 3px;
+		gap: 2px;
 		grid-template-columns: 1fr 1fr 1fr 1fr;
 	}
+}
+
+.tile {
+	width: 100px;
+	height: 100px;
+	background-repeat: no-repeat;
+	border: none;
+	background: url('../images/narwhal-animated.gif');
+	// background: url('../images/narwhal-static.jpg');
+	background-size: 400% 400%;
+}
+
+.tile-blank {
+	background: none;
+	background-color: #0a0a0a;
+}
+
+.tile-1 {
+	background-position: 0 0;
+}
+.tile-2 {
+	background-position: 33.33% 0;
+}
+.tile-3 {
+	background-position: 66.66% 0;
+}
+.tile-4 {
+	background-position: 100% 0;
+}
+.tile-5 {
+	background-position: 0 33.33%;
+}
+.tile-6 {
+	background-position: 33.33% 33.33%;
+}
+.tile-7 {
+	background-position: 66.66% 33.33%;
+}
+.tile-8 {
+	background-position: 100% 33.33%;
+}
+.tile-9 {
+	background-position: 0% 66.66%;
+}
+.tile-10 {
+	background-position: 33.33% 66.66%;
+}
+.tile-11 {
+	background-position: 66.66% 66.66%;
+}
+.tile-12 {
+	background-position: 100% 66.66%;
+}
+.tile-13 {
+	background-position: 0% 100%;
+}
+.tile-14 {
+	background-position: 33.33% 100%;
+}
+.tile-15 {
+	background-position: 66.66% 100%;
+}
+.tile-16 {
+	background-position: 100% 100%;
 }
