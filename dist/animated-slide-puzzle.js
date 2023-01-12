@@ -37,7 +37,7 @@ let puzzle = document.querySelector('.puzzle-wrapper');
 // Setup Functions
 // ============================
 
-// Display initial board
+// display initial board
 function drawBoard() {
 	board.forEach((tileName, idx) => {
 		let tile = document.createElement('button');
@@ -45,7 +45,38 @@ function drawBoard() {
 		tile.classList.add(tileName);
 		tile.setAttribute('id', idx);
 		puzzle.appendChild(tile);
+		// tile (button) event listener
+		tile.addEventListener( 'click', (event) => {
+			let tileId = tile.getAttribute('id');
+			console.log('tileId', tileId);
+			console.log('board', board);
+			swap(tileId, 15);
+			console.log('board', board);
+			updateBoard();
+		});
 	});
 }
+
+
+// ============================
+// Game Play Functions
+// ============================
+
+// swap two elements from the board tracking array
+function swap(idx1, idx2) {
+	let temp = board[idx1];
+	board[idx1] = board[idx2];
+	board[idx2] = temp;
+}
+
+// updated all buttons based on board tracking array
+function updateBoard() {
+	const tiles = document.querySelectorAll('.tile');
+	tiles.forEach((tile, idx) => {
+		tile.classList = 'tile';
+		tile.classList.add(board[idx]);
+	});
+}
+
 
 drawBoard();
