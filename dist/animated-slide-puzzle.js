@@ -130,4 +130,26 @@ function updateBoard() {
 }
 
 
+// ============================
+// Key pressed controls
+// ============================
+window.addEventListener('keydown', (event) => {
+	if (event.defaultPrevented) {
+		return; // do nothing if the event was already processed
+	}
+	const blankIdx = findBlankTile();
+	let nextTileIdx;
+	if (event.key === 'ArrowDown' || event.key === 's' || event.key === 'k') {
+	nextTileIdx = blankIdx - cols;
+	} else if (event.key === 'ArrowUp' || event.key === 'w' || event.key === 'i') {
+		nextTileIdx = blankIdx + cols;
+	} else if (event.key === 'ArrowRight' || event.key === 'd' || event.key === 'l') {
+		nextTileIdx = blankIdx - 1;
+	} else if (event.key === 'ArrowLeft' || event.key === 'a' || event.key === 'j') {
+		nextTileIdx = blankIdx + 1;
+	}
+	move(nextTileIdx);
+});
+
+
 drawBoard();
