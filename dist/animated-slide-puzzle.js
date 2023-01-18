@@ -7,6 +7,8 @@
 const blankTile = 'tile-blank';
 let cols = 4;
 let rows = 4;
+const easyShuffle = 10;
+const hardShuffle = 1000;
 
 // board tiles
 const solvedBoard = [
@@ -38,6 +40,10 @@ let puzzle = document.querySelector('.puzzle-wrapper');
 // ============================
 // Setup Functions
 // ============================
+function setup() {
+	tileShuffle(easyShuffle); // easyShuffle or hardShuffle
+	drawBoard();
+}
 
 // display initial board
 function drawBoard() {
@@ -55,6 +61,66 @@ function drawBoard() {
 			move(tileId);
 		});
 	});
+}
+
+// parameters: number
+function tileShuffle(numOfTimes) {
+	for (let i = 0; i < numOfTimes; i++) {
+		randomMove();
+	}
+}
+
+// parameters: number (top range for random generator)
+// returns: number (randomly generated number)
+function randomGenerator(range) {
+	const randomNum = Math.floor(Math.random() * range);
+	return randomNum;
+};
+
+// randomly move tile pieces based on blank tile's position, used for shuffling board
+// updates board tracking array
+function randomMove() {
+	const blankIdx = findBlankTile();
+	const blankPos = findTilePosition(blankIdx);
+	const blankRowPos = blankPos.row;
+	const blankColPos = blankPos.col;
+	const lastRow = rows - 1;
+	const lastCol = cols - 1;
+	let tileRowPos = blankRowPos; // defaults to blank tile
+	let tileColPos = blankColPos; // defaults to blank tile
+	const randomizer = Math.floor(randomGenerator(10));
+	// randomly move horizontally
+	if (randomizer % 2 === 0) {
+		tileRowPos = pickRandomTile(randomizer, blankRowPos, lastRow);
+	// randomly move vertically
+	} else {
+		tileColPos = pickRandomTile(randomizer, blankColPos, lastCol);
+	}
+	const randomTileIdx = findTileIdx(tileRowPos, cols, tileColPos);
+	swap(blankIdx, randomTileIdx);
+}
+
+
+// randomly chooses adjacent tile for swapping, used for shuffling board
+// parameters: number, number, number (random number, tile (row/col) position, last row/col) position)
+// returns: number (next tile position to swap tile with)
+function pickRandomTile(randomVal, blankPos, lastEdgePos) {
+	let tilePos;
+	// if at ending edge, move up or left
+	if (blankPos === lastEdgePos) {
+		tilePos = blankPos - 1;
+		// if at beginning edge, move down or right
+	} else if (blankPos === 0) {
+		tilePos = blankPos + 1;
+	// inner pieces, move randomly
+	} else {
+		if (randomVal <= 4) {
+			tilePos = blankPos + 1;
+		} else {
+			tilePos = blankPos - 1;
+		}
+	}
+	return tilePos;
 }
 
 
@@ -77,6 +143,13 @@ function findTilePosition(id) {
 		row: tileRowPosition,
 		col: tileColPosition
 	};
+}
+
+// converts (tile row & col position) to (board index)
+// parameters: number, number, number (tile row position, number of columns, tile col position)
+// returns: number (index in board array)
+function findTileIdx(tileRowPos, cols, tileColPos) {
+	return (tileRowPos * cols) + tileColPos;
 }
 
 // swap two elements from the board tracking array
@@ -152,4 +225,4 @@ window.addEventListener('keydown', (event) => {
 });
 
 
-drawBoard();
+setup();
