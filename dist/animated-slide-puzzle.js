@@ -5,8 +5,8 @@
 
 // tile & board configuration
 const blankTile = 'tile-blank';
-let cols = 4;
-let rows = 4;
+const cols = 4;
+const rows = 4;
 const easyShuffle = 10;
 const hardShuffle = 1000;
 
@@ -31,10 +31,10 @@ const solvedBoard = [
 ];
 
 // tracking the board tiles in play
-let board = [...solvedBoard]; // will duplicate the original array
+const board = [...solvedBoard]; // will duplicate the original array
 
 // Elements
-let puzzle = document.querySelector('.puzzle-wrapper');
+const puzzle = document.querySelector('.puzzle-wrapper');
 
 
 // ============================
@@ -48,16 +48,14 @@ function setup() {
 // display initial board
 function drawBoard() {
 	board.forEach((tileName, idx) => {
-		let tile = document.createElement('button');
+		const tile = document.createElement('button');
 		tile.classList.add('tile');
 		tile.classList.add(tileName);
 		tile.setAttribute('id', idx);
 		puzzle.appendChild(tile);
 		// tile (button) event listener
 		tile.addEventListener( 'click', (event) => {
-			let tileId = tile.getAttribute('id');
-			console.log('tileId', tileId);
-			console.log('board', board);
+			const tileId = event.target.id;
 			move(tileId);
 		});
 	});
