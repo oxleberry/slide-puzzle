@@ -166,6 +166,7 @@ function move(tileId) {
 		// move selected tile with blank tile
 		swap(blankIdx, tileId);
 		updateBoard();
+		checkSolved();
 	}
 }
 
@@ -200,6 +201,19 @@ function updateBoard() {
 		tile.classList = 'tile';
 		tile.classList.add(board[idx]);
 	});
+}
+
+
+// ============================
+// Win Functions
+// ============================
+function checkSolved() {
+	for (let i = 0; i < board.length-1; i++) {
+		if (board[i] !== solvedBoard[i]) {
+			return false;
+		}
+	}
+	console.log("Solved");
 }
 
 
