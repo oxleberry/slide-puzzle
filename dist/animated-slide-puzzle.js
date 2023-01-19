@@ -206,12 +206,20 @@ function updateBoard() {
 // Win Functions
 // ============================
 function checkSolved() {
-	for (let i = 0; i < board.length-1; i++) {
+	// Confetti library: https://github.com/loonywizard/js-confetti
+	const jsConfetti = new JSConfetti();
+	for (let i = 0; i < board.length - 1; i++) {
 		if (board[i] !== solvedBoard[i]) {
 			return false;
 		}
 	}
-	console.log("Solved");
+	jsConfetti.addConfetti({
+		confettiColors: [
+			'#f94144', '#f3722c', '#ffbe0b', '#8ac926', '#027bce', '#662e9b', '#f26ca7'
+		],
+		confettiRadius: 4.5,
+		confettiNumber: 800,
+	});
 }
 
 
